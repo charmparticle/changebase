@@ -8,7 +8,7 @@ numerals = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_"
 base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
 def badbase():
-    print("Please try again: choose a base between 1 and 64")
+    print("Please try again: choose a base between 2 and 64")
     exit(1)
 
 def badchar():
@@ -84,11 +84,11 @@ else:
     for arg in argv[2:]:
         if arg == '-f':
             f=int(argv[i])
-            if f not in range(1,65):
+            if f not in range(2,65):
                 badbase()
         if arg == '-t':
             t=int(argv[i])
-            if t not in range(1,65):
+            if t not in range(2,65):
                 badbase()
         i = i+1
     if not 'f' in vars():
