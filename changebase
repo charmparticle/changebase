@@ -1,0 +1,92 @@
+#!/usr/bin/env python
+from sys import argv
+import math
+from time import sleep
+
+numerals = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_"
+#https://en.wikipedia.org/wiki/Base64
+base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+
+def badchar():
+    print("Invalid chars.\n" + 
+          "Valid chars are 0-9, A-Z, a-z, _-=+/#")
+    exit(1)
+
+
+def to_10(num, from_base):
+    num = num.replace('=', '')
+    num = num.replace('#', '')
+    if from_base == "10":
+        return(num)
+    else:
+        to_10 = 0
+        degree = len(num) - 1
+        cursor = 0
+        #build a polynomial, and sum it :-)
+        try:
+            while degree >= 0:
+                if int(from_base) <= 63: 
+                    coeff = numerals.index(num[cursor])
+                elif int(from_base) == 64:
+                    coeff = base64.index(num[cursor])
+                to_10 = to_10 + coeff * (int(from_base) ** degree)
+                degree = degree - 1
+                cursor = cursor + 1
+        except IndexError:
+            badchar()
+        except ValueError:
+            badchar()
+    return(to_10)
+  
+def to_n(num, to_base):
+#num is base10
+    try:
+        rem = int(num)
+        to_base = int(to_base)
+    except ValueError:
+        print("Invalid chars.\n" + 
+              "Valid chars are 0-9, A-Z, a-z, _-=+/#")
+        exit(1)
+    ans = ""
+    try:
+        degree = int(math.log(rem, to_base))
+    except ValueError as e:
+        if num == 0:
+            print("0")
+            exit(0)
+        else:
+            print("Value error: {}".format(e))
+            exit(1)
+    #find a polynomial, and write it down
+    while degree >= 0:
+        coeff = rem / (to_base ** degree)
+        if to_base <= 63: 
+            ans = ans + numerals[coeff]
+        elif int(to_base) == 64:
+            ans = ans + base64[coeff]
+        rem = rem - (coeff * to_base ** degree)
+        degree = degree - 1
+    return(ans)
+
+def start(num, from_base, to_base):
+    b10num = to_10(num, from_base)
+    print(to_n(b10num, to_base))
+
+if len(argv) < 4:
+    print("usage:\n" +
+          "{} <number_in_some_base> -f <from_base> -t <to_base>".format(argv[0]))
+else:
+    n = argv[1]
+    i = 3
+    for arg in argv[2:]:
+        if arg == '-f':
+            f=argv[i]
+        if arg == '-t':
+            t=argv[i]
+        i = i+1
+    if not 'f' in vars():
+        f="10"
+    if not 't' in vars():
+        t="10"
+    
+    start(n, f, t)
