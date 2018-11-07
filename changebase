@@ -25,11 +25,11 @@ def to_10(num, from_base):
         #build a polynomial, and sum it :-)
         try:
             while degree >= 0:
-                if int(from_base) <= 63: 
+                if from_base <= 63: 
                     coeff = numerals.index(num[cursor])
-                elif int(from_base) == 64:
+                elif from_base == 64:
                     coeff = base64.index(num[cursor])
-                to_10 = to_10 + coeff * (int(from_base) ** degree)
+                to_10 = to_10 + coeff * (from_base ** degree)
                 degree = degree - 1
                 cursor = cursor + 1
         except IndexError:
@@ -42,7 +42,6 @@ def to_n(num, to_base):
 #num is base10
     try:
         rem = int(num)
-        to_base = int(to_base)
     except ValueError:
         print("Invalid chars.\n" + 
               "Valid chars are 0-9, A-Z, a-z, _-=+/#")
@@ -62,7 +61,7 @@ def to_n(num, to_base):
         coeff = rem / (to_base ** degree)
         if to_base <= 63: 
             ans = ans + numerals[coeff]
-        elif int(to_base) == 64:
+        elif to_base == 64:
             ans = ans + base64[coeff]
         rem = rem - (coeff * to_base ** degree)
         degree = degree - 1
@@ -80,13 +79,17 @@ else:
     i = 3
     for arg in argv[2:]:
         if arg == '-f':
-            f=argv[i]
+            f=int(argv[i])
+            if f not in range(1,65):
+                print("Please try again: choose a base between 1 and 64")
         if arg == '-t':
-            t=argv[i]
+            t=int(argv[i])
+            if t not in range(1,65):
+                print("Please try again: choose a base between 1 and 64")
         i = i+1
     if not 'f' in vars():
-        f="10"
+        f=10
     if not 't' in vars():
-        t="10"
+        t=10
     
     start(n, f, t)
