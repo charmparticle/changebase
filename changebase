@@ -13,7 +13,9 @@ def badbase():
 
 def badchar():
     print("Invalid chars.\n" + 
-          "Valid chars are 0-9, A-Z, a-z, _-=+/#")
+          "Valid chars are 0-9, A-Z, a-z, _-=+/#\n" +
+          "up to the index allowed by the chosen number,\n" +
+          "ie, only up to F for base16\n")
     exit(1)
 
 
@@ -30,7 +32,7 @@ def to_10(num, from_base):
         try:
             while degree >= 0:
                 if from_base <= 63: 
-                    coeff = numerals.index(num[cursor])
+                    coeff = numerals[0:from_base].index(num[cursor])
                 elif from_base == 64:
                     coeff = base64.index(num[cursor])
                 to_10 = to_10 + coeff * (from_base ** degree)
