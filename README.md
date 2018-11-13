@@ -2,39 +2,29 @@
 
 A simple python script to change the numeric base of some arbitrary number in some arbitrary numeric base between 2 and 64.
 
-
-
 Use it like this:
 
+*changebase assumes you want base10, like a normal human*
 
+    $ changebase ZAZZLE -f 36
 
-#changebase assumes you want base10, like a normal human
+    $ 2134791410
 
-changebase ZAZZLE -f 36
+*you can also be explicit*
 
-2134791410
+    $ changebase BOOGIE -f 25 -t 10 
 
+    $ 117182339
 
+*get wild*
 
-#you can also be explicit
+    $ changebase All+Your+Base -f 64 -t 2
 
-changebase BOOGIE -f 25 -t 10 
+    $ 100101100101111110011000101000101110101011111110000001011010101100011110
 
-117182339
+*you can also use pipes*
 
+    $ changebase RAD -f 34 -t 2 | changebase - -f 2 -t 34
 
-
-#get wild
-
-changebase All+Your+Base -f 64 -t 2
-
-100101100101111110011000101000101110101011111110000001011010101100011110
-
-
-
-#you can also use pipes
-
-changebase RAD -f 34 -t 2 | changebase - -f 2 -t 34
-
-RAD
+    $ RAD
 
